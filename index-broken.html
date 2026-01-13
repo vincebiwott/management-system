@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Operations | Authentication</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/professional.css">
@@ -149,7 +150,7 @@
                     </div>
                     <div class="ml-3">
                         <label for="terms" class="text-sm text-gray-700">
-                            I agree to <a href="#" class="text-green-600 hover:underline">Terms of Service</a> and 
+                            I agree to the <a href="#" class="text-green-600 hover:underline">Terms of Service</a> and 
                             <a href="#" class="text-green-600 hover:underline">Privacy Policy</a>
                         </label>
                     </div>
@@ -203,5 +204,33 @@
             </div>
         </div>
     </div>
+    
+    <!-- JavaScript -->
+    <script>
+      // Check server status on load
+      async function checkServerStatus() {
+        try {
+          const response = await fetch('/api/status');
+          const data = await response.json();
+          return true;
+        } catch (error) {
+          console.error('Server not responding');
+          return false;
+        }
+      }
+      
+      // Initialize everything when the page loads
+      document.addEventListener('DOMContentLoaded', async () => {
+        // Check server status
+        const serverOk = await checkServerStatus();
+        if (!serverOk) return;
+        
+        // Initialize Supabase
+        const supabaseOk = await initSupabase();
+        if (!supabaseOk) return;
+        
+        // Load the main app
+      });
+    </script>
 </body>
 </html>

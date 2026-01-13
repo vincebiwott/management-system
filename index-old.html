@@ -4,13 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Operations | Authentication</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/professional.css">
-    <script src="auth.js"></script>
-</head>
-<body>
-    <div class="auth-container" id="auth-container">
+    <script>
+      // Initialize Supabase after fetching config from the server
+      let supabase;
+      
+      // Fetch Supabase config from the server
+      async function initSupabase() {
+        try {
+          const response = await fetch('/api/config');
+          const config = await response.json();
+          
+          // Initialize Supabase with the config from the server
+          supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseKey, {
+            auth: {
+              autoRefreshToken: true,
+              persistSession: true,
+              detectSessionInUrl: true
+            }
+          });
+          
+          console.log('Supabase initialized successfully');
+          return true;
+        } catch (error) {
+          console.error('Failed to initialize Supabase:', error);
+          return false;
+        }
+      }
+      
+      // Initialize Supabase when the page loads
+      document.addEventListener('DOMContentLoaded', initSupabase);
+    </script>
         <!-- Login View (default) -->
         <div id="login-view" class="auth-card fade-in">
             <div class="text-center mb-8">
@@ -149,7 +176,7 @@
                     </div>
                     <div class="ml-3">
                         <label for="terms" class="text-sm text-gray-700">
-                            I agree to <a href="#" class="text-green-600 hover:underline">Terms of Service</a> and 
+                            I agree to the <a href="#" class="text-green-600 hover:underline">Terms of Service</a> and 
                             <a href="#" class="text-green-600 hover:underline">Privacy Policy</a>
                         </label>
                     </div>
@@ -203,5 +230,38 @@
             </div>
         </div>
     </div>
+    
+    <!-- JavaScript -->
+    <script>
+      // Check server status on load
+      async function checkServerStatus() {
+        try {
+          const response = await fetch('/api/status');
+          const data = await response.json();
+          return true;
+        } catch (error) {
+          console.error('Server not responding');
+          return false;
+        }
+      }
+      
+      // Initialize everything when the page loads
+      document.addEventListener('DOMContentLoaded', async () => {
+        // Check server status
+        const serverOk = await checkServerStatus();
+        if (!serverOk) return;
+        
+        // Initialize Supabase
+        const supabaseOk = await initSupabase();
+        if (!supabaseOk) return;
+        
+        // Load the main app
+        const script = document.createElement('script');
+        script.src = 'auth.js';
+        script.onload = () => console.log('Application loaded successfully');
+        script.onerror = () => console.error('Failed to load application');
+        document.body.appendChild(script);
+      });
+    </script>
 </body>
 </html>
