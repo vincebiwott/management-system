@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safari Park Hotel - Daily Reporting System</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-card glass-morphism">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-hotel"></i>
+                        <h1>Safari Park Hotel</h1>
+                        <p>Daily Reporting System</p>
+                    </div>
+                </div>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Login As</label>
+                        <div class="input-group">
+                            <i class="fas fa-user-tag"></i>
+                            <select id="role" required>
+                                <option value="">Select your role</option>
+                                <option value="staff">Staff Member</option>
+                                <option value="department_head">Department Head</option>
+                                <option value="general_manager">General Manager</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="departmentGroup" style="display: none;">
+                        <label for="department">Department</label>
+                        <div class="input-group">
+                            <i class="fas fa-building"></i>
+                            <select id="department">
+                                <option value="">Select your department</option>
+                                <option value="guest_relations">Guest Relations</option>
+                                <option value="concierge">Concierge</option>
+                                <option value="cashier">Cashier</option>
+                                <option value="switchboard">Switchboard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+                </form>
+                
+                <div class="demo-accounts">
+                    <p><strong>Demo Accounts:</strong></p>
+                    <div class="demo-list">
+                        <div class="demo-item">
+                            <span>Staff: staff@guest.com / 123456</span>
+                        </div>
+                        <div class="demo-item">
+                            <span>HOD: hod@guest.com / 123456</span>
+                        </div>
+                        <div class="demo-item">
+                            <span>Manager: gm@hotel.com / 123456</span>
+                        </div>
+                        <div class="demo-item">
+                            <span>Admin: admin@hotel.com / 123456</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboardScreen" class="screen">
+        <!-- Navigation -->
+        <nav class="navbar glass-morphism">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-hotel"></i>
+                    <span>Safari Park Hotel</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <div class="nav-item">
+                        <span class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="currentUser">John Doe</span>
+                            <span class="user-role" id="currentUserRole">Staff</span>
+                        </span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar glass-morphism">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <h3>Main Menu</h3>
+                    <ul class="menu-list">
+                        <li class="menu-item active" data-page="dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </li>
+                        <li class="menu-item" data-page="reports">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </li>
+                        <li class="menu-item" data-page="analytics">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Analytics</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section" id="managementSection" style="display: none;">
+                    <h3>Management</h3>
+                    <ul class="menu-list">
+                        <li class="menu-item" data-page="staff-management">
+                            <i class="fas fa-users"></i>
+                            <span>Staff Management</span>
+                        </li>
+                        <li class="menu-item" data-page="department-summary">
+                            <i class="fas fa-building"></i>
+                            <span>Department Summary</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section" id="adminSection" style="display: none;">
+                    <h3>Administration</h3>
+                    <ul class="menu-list">
+                        <li class="menu-item" data-page="user-management">
+                            <i class="fas fa-user-cog"></i>
+                            <span>User Management</span>
+                        </li>
+                        <li class="menu-item" data-page="system-settings">
+                            <i class="fas fa-cogs"></i>
+                            <span>System Settings</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back! Here's your daily overview.</p>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="todayReports">0</h3>
+                            <p class="stat-label">Today's Reports</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="pendingReports">0</h3>
+                            <p class="stat-label">Pending</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="completedReports">0</h3>
+                            <p class="stat-label">Completed</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="satisfactionRate">0%</h3>
+                            <p class="stat-label">Satisfaction Rate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container glass-morphism">
+                        <h3>Weekly Report Trend</h3>
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container glass-morphism">
+                        <h3>Department Distribution</h3>
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section glass-morphism">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Page -->
+            <div id="reportsPage" class="page">
+                <div class="page-header">
+                    <h1>Daily Reports</h1>
+                    <button class="btn btn-primary" onclick="openReportModal()">
+                        <i class="fas fa-plus"></i>
+                        New Report
+                    </button>
+                </div>
+                
+                <!-- Report Filters -->
+                <div class="filters-section glass-morphism">
+                    <div class="filter-group">
+                        <input type="text" id="searchReports" placeholder="Search reports..." class="filter-input">
+                        <select id="statusFilter" class="filter-input">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="reviewed">Reviewed</option>
+                            <option value="approved">Approved</option>
+                        </select>
+                        <input type="date" id="dateFilter" class="filter-input">
+                    </div>
+                </div>
+                
+                <!-- Reports List -->
+                <div class="reports-grid" id="reportsGrid">
+                    <!-- Reports will be added dynamically -->
+                </div>
+            </div>
+
+            <!-- Analytics Page -->
+            <div id="analyticsPage" class="page">
+                <div class="page-header">
+                    <h1>Analytics & Insights</h1>
+                    <p>Deep dive into your hotel's performance metrics</p>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card glass-morphism">
+                        <h3>Performance Metrics</h3>
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                    
+                    <div class="analytics-card glass-morphism">
+                        <h3>Trend Analysis</h3>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    
+                    <div class="analytics-card glass-morphism">
+                        <h3>Staff Performance</h3>
+                        <canvas id="staffChart"></canvas>
+                    </div>
+                    
+                    <div class="analytics-card glass-morphism">
+                        <h3>Issue Distribution</h3>
+                        <canvas id="issueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Management Page (HOD & Admin) -->
+            <div id="staff-managementPage" class="page">
+                <div class="page-header">
+                    <h1>Staff Management</h1>
+                    <button class="btn btn-primary" onclick="openStaffModal()">
+                        <i class="fas fa-user-plus"></i>
+                        Add Staff
+                    </button>
+                </div>
+                
+                <div class="staff-grid" id="staffGrid">
+                    <!-- Staff cards will be added dynamically -->
+                </div>
+            </div>
+
+            <!-- Department Summary Page (HOD) -->
+            <div id="department-summaryPage" class="page">
+                <div class="page-header">
+                    <h1>Department Summary</h1>
+                    <button class="btn btn-primary" onclick="generateDepartmentSummary()">
+                        <i class="fas fa-file-export"></i>
+                        Generate Summary
+                    </button>
+                </div>
+                
+                <div class="summary-content glass-morphism">
+                    <div class="summary-stats">
+                        <h3>Today's Overview</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span class="summary-label">Total Reports:</span>
+                                <span class="summary-value" id="deptTotalReports">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Staff Present:</span>
+                                <span class="summary-value" id="deptStaffPresent">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Issues Resolved:</span>
+                                <span class="summary-value" id="deptIssuesResolved">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Pending Actions:</span>
+                                <span class="summary-value" id="deptPendingActions">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-reports">
+                        <h3>Staff Reports</h3>
+                        <div id="staffReportsList">
+                            <!-- Staff reports will be listed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Management Page (Admin) -->
+            <div id="user-managementPage" class="page">
+                <div class="page-header">
+                    <h1>User Management</h1>
+                    <button class="btn btn-primary" onclick="openUserModal()">
+                        <i class="fas fa-user-plus"></i>
+                        Add User
+                    </button>
+                </div>
+                
+                <div class="users-table-container glass-morphism">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- System Settings Page (Admin) -->
+            <div id="system-settingsPage" class="page">
+                <div class="page-header">
+                    <h1>System Settings</h1>
+                    <p>Configure system-wide settings and preferences</p>
+                </div>
+                
+                <div class="settings-container glass-morphism">
+                    <div class="setting-group">
+                        <h3>Report Configuration</h3>
+                        <div class="setting-item">
+                            <label>Auto-save interval (minutes):</label>
+                            <input type="number" id="autoSaveInterval" value="5" min="1" max="60">
+                        </div>
+                        <div class="setting-item">
+                            <label>Require approval for reports:</label>
+                            <input type="checkbox" id="requireApproval" checked>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-item">
+                            <label>Email notifications:</label>
+                            <input type="checkbox" id="emailNotifications" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label>Desktop notifications:</label>
+                            <input type="checkbox" id="desktopNotifications">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i>
+                        Save Settings
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content glass-morphism">
+            <div class="modal-header">
+                <h2>Create Daily Report</h2>
+                <button class="modal-close" onclick="closeReportModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="reportForm" class="report-form">
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+                    <div class="form-group">
+                        <label for="reportDate">Report Date</label>
+                        <input type="date" id="reportDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shift">Shift</label>
+                        <select id="shift" required>
+                            <option value="">Select shift</option>
+                            <option value="morning">Morning (6AM - 2PM)</option>
+                            <option value="afternoon">Afternoon (2PM - 10PM)</option>
+                            <option value="night">Night (10PM - 6AM)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Department Specific Activities</h3>
+                    <div id="departmentFields">
+                        <!-- Department-specific fields will be added based on user role -->
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Additional Information</h3>
+                    <div class="form-group">
+                        <label for="challenges">Challenges Faced</label>
+                        <textarea id="challenges" rows="3" placeholder="Describe any challenges or issues encountered..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="achievements">Achievements/Highlights</label>
+                        <textarea id="achievements" rows="3" placeholder="Highlight any achievements or positive experiences..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" rows="3" placeholder="Any additional information..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeReportModal()">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Submit Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
