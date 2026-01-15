@@ -1,0 +1,276 @@
+You are a senior full-stack engineer and UI/UX specialist building a production-ready hotel operations reporting web application.
+
+1. PURPOSE OF THE SYSTEM
+
+Build an internal Hotel Department Daily Reporting System that replaces Google Sheets.
+
+Departments:
+
+Guest Relations Office (GRO)
+
+Concierge
+
+Reservations
+
+Switchboard
+
+The system is staff-only, secure, and professional.
+
+2. TECH STACK (MANDATORY)
+
+Frontend: React (Vite)
+
+Styling: Tailwind CSS
+
+Animations: Framer Motion
+
+Backend & Auth: Supabase
+
+Database: Supabase Postgres
+
+Storage: Supabase Storage (for attachments)
+
+Version control: GitHub (initialize repo and commit-ready structure)
+
+No paid services. No locked features.
+
+3. AUTHENTICATION & ACCESS CONTROL
+
+Use Supabase authentication.
+
+Pages required:
+
+Login
+
+Sign Up
+
+Forgot Password
+
+Rules:
+
+Forms must be centered vertically and horizontally
+
+Clean, calm, professional layout
+
+No top-heavy layouts
+
+Roles:
+
+Staff → submit & view own reports
+
+Supervisor / HOD → view all reports + comment
+
+Admin → manage users & departments
+
+Use role-based access with Supabase policies.
+
+4. DASHBOARD DESIGN & BEHAVIOR
+
+Dashboard must be center-focused, not top-admin style.
+
+Staff Dashboard:
+
+Large central button: “Submit Today’s Report”
+
+Status indicator:
+
+Draft
+
+Submitted
+
+Reviewed
+
+Action Required
+
+View past reports (own department only)
+
+Supervisor / Manager Dashboard:
+
+Department status cards:
+
+GRO – Submitted / Pending
+
+Concierge – Submitted / Pending
+
+Reservations – Submitted / Pending
+
+Switchboard – Submitted / Pending
+
+Highlight incidents clearly
+
+Ability to open reports and comment
+
+No charts for now. Clean cards only.
+
+5. REPORT STRUCTURE (CORE FEATURE)
+
+Each report must include:
+
+Date (auto-filled)
+
+Department
+
+Staff name
+
+Shift (Morning / Evening / Night)
+
+Key activities
+
+Guest feedback / complaints
+
+Issues or incidents
+
+Pending follow-ups
+
+Supervisor remarks (manager only)
+
+Additional features:
+
+Incident flag (Yes/No)
+
+If incident = true → highlight report with orange accent
+
+Report status:
+
+Draft
+
+Submitted
+
+Reviewed
+
+Action Required
+
+6. ATTACHMENTS
+
+Allow optional uploads:
+
+Photos
+
+PDFs
+
+Screenshots
+
+Use Supabase Storage.
+Files must be linked to reports securely.
+
+7. UI / DESIGN REQUIREMENTS
+
+Color palette:
+
+Primary: Green
+
+Background: White
+
+Accent: Orange (used sparingly for incidents & actions)
+
+Style:
+
+Professional hotel-grade
+
+Calm, minimal, clean
+
+Mobile-first responsive design
+
+Typography:
+
+Clear
+
+Readable
+
+Not playful
+
+8. ANIMATIONS & UX (VERY IMPORTANT)
+
+Animations must be:
+
+Seamless
+
+Fast
+
+User-friendly
+
+Never distracting
+
+Use:
+
+Subtle fade-ins
+
+Smooth transitions between pages
+
+Button hover micro-interactions
+
+Card load animations
+
+No lag. No flashy effects.
+
+9. DATABASE DESIGN (SUPABASE)
+
+Create tables for:
+
+users
+
+roles
+
+departments
+
+reports
+
+report_comments
+
+attachments
+
+Use proper relationships and foreign keys.
+
+Implement row-level security:
+
+Staff → only their own department
+
+Supervisors → all departments (read + comment)
+
+Admin → full access
+
+10. CODE QUALITY & STRUCTURE
+
+Clean folder structure
+
+Reusable components
+
+Clear naming conventions
+
+Production-ready code
+
+No demo or placeholder logic
+
+Prepare the project so it can be:
+
+Pushed to GitHub
+
+Extended later
+
+Maintained professionally
+
+11. FINAL EXPECTATION
+
+This system must feel like:
+
+A real hotel operations product
+
+Not a prototype
+
+Not a tutorial project
+
+Deliver:
+
+Fully working frontend
+
+Supabase integration
+
+Authentication
+
+Role-based dashboards
+
+Report workflow
+
+Smooth UX
+
+Proceed step by step and explain setup clearly after generating the code.
